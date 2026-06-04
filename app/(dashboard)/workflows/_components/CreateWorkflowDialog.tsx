@@ -43,8 +43,15 @@ function CreateWorkflowDialog({ triggerText }: { triggerText?: string }) {
       toast.success("Workflow created", { id: "create-workflow" });
       router.push(`/workflow/editor/${data.id}`);
     },
-    onError: () => {
-      toast.error("Failed to create workflow", { id: "create-workflow" });
+    onError: (error) => {
+      if (error.message === "DUPLICATE_NAME") {
+        form.setError("name", {
+          message: "Workflow name already exists. Choose a different name.",
+        });
+        toast.error("Workflow name already exists", { id: "create-workflow" });
+      } else {
+        toast.error("Failed to create workflow", { id: "create-workflow" });
+      }
     },
   });
 
@@ -57,7 +64,10 @@ function CreateWorkflowDialog({ triggerText }: { triggerText?: string }) {
   );
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={(open) => {
+        form.reset();
+        setOpen(open);
+    }}>
       <DialogTrigger asChild>
         <Button>{triggerText ?? "Create Workflow"}</Button>
       </DialogTrigger>

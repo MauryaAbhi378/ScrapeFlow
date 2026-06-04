@@ -20,6 +20,18 @@ export async function CreateWorkflow(form: createWorkflowSchemaType) {
     throw new Error("Unauthenticated");
   }
 
+  // Check if workflow with same name already exists for this user
+  const existingWorkflow = await prisma.workflow.findFirst({
+    where: {
+      userId,
+      name: data.name,
+    },
+  });
+
+  if (existingWorkflow) {
+    throw new Error("DUPLICATE_NAME");
+  }
+
   const result = await prisma.workflow.create({
     data: {
       userId,
