@@ -1,11 +1,11 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
 import { TaskParam, TaskParamType } from "@/types/task";
 import StringParam from "./param/StringParam";
 import { useReactFlow } from "@xyflow/react";
 import { AppNode } from "@/types/appNode";
 import { useCallback } from "react";
+import BrowserInstanceParam from "./param/BrowserInstanceParam";
 
 function NodeParamField({
   param,
@@ -38,6 +38,14 @@ function NodeParamField({
           updateNodeParamValue={updateNodeParamValue}
         />
       );
+      case TaskParamType.BROWSER_INSTANCE:
+        return (
+          <BrowserInstanceParam
+          param={param}
+          value={""}
+          updateNodeParamValue={updateNodeParamValue}
+          />
+        )
     default:
       return (
         <div className="w-full">
