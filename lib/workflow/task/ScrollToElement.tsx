@@ -1,12 +1,12 @@
 import { TaskParamType, TaskType, WorkflowTask } from "@/types/task";
-import { CodeIcon } from "lucide-react";
+import { ArrowDownToLineIcon } from "lucide-react";
 import { createTaskIcon } from "./icon";
 
-export const PageToHtmlTask: WorkflowTask = {
-  type: TaskType.PAGE_TO_HTML,
-  label: "Get html from page",
-  icon: createTaskIcon(CodeIcon, "stroke-rose-400"),
-  credits: 2,
+export const ScrollToElementTask: WorkflowTask = {
+  type: TaskType.SCROLL_TO_ELEMENT,
+  label: "Scroll to element",
+  icon: createTaskIcon(ArrowDownToLineIcon, "stroke-orange-300"),
+  credits: 1,
   isEntryPoint: false,
   inputs: [
     {
@@ -14,12 +14,14 @@ export const PageToHtmlTask: WorkflowTask = {
       type: TaskParamType.BROWSER_INSTANCE,
       required: true,
     },
+    {
+      name: "Selector",
+      type: TaskParamType.STRING,
+      helperText: "CSS selector for the element to bring into view.",
+      required: true,
+    },
   ],
   outputs: [
-    {
-      name: "Html",
-      type: TaskParamType.STRING,
-    },
     {
       name: "Web page",
       type: TaskParamType.BROWSER_INSTANCE,

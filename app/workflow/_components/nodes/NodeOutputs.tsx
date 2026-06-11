@@ -12,8 +12,8 @@ export function NodeOutputs({ children }: { children: ReactNode }) {
 
 export function NodeOutput({ output }: { output: TaskParam }) {
   return (
-    <div className="flex justify-content relative p-3 bg-secondary">
-      <p className="text-xs text-muted-foreground">{output.name}</p>
+    <div className="relative flex justify-end bg-secondary p-3 pr-5">
+      <p className="text-right text-xs text-muted-foreground">{output.name}</p>
       <Handle
         id={output.name}
         type="source"

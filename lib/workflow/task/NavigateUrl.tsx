@@ -1,11 +1,11 @@
 import { TaskParamType, TaskType, WorkflowTask } from "@/types/task";
-import { CodeIcon } from "lucide-react";
+import { Link2Icon } from "lucide-react";
 import { createTaskIcon } from "./icon";
 
-export const PageToHtmlTask: WorkflowTask = {
-  type: TaskType.PAGE_TO_HTML,
-  label: "Get html from page",
-  icon: createTaskIcon(CodeIcon, "stroke-rose-400"),
+export const NavigateUrlTask: WorkflowTask = {
+  type: TaskType.NAVIGATE_URL,
+  label: "Navigate Url",
+  icon: createTaskIcon(Link2Icon, "stroke-amber-500"),
   credits: 2,
   isEntryPoint: false,
   inputs: [
@@ -14,12 +14,14 @@ export const PageToHtmlTask: WorkflowTask = {
       type: TaskParamType.BROWSER_INSTANCE,
       required: true,
     },
+    {
+      name: "Url",
+      type: TaskParamType.STRING,
+      helperText: "Destination URL to open in the current browser tab.",
+      required: true,
+    },
   ],
   outputs: [
-    {
-      name: "Html",
-      type: TaskParamType.STRING,
-    },
     {
       name: "Web page",
       type: TaskParamType.BROWSER_INSTANCE,

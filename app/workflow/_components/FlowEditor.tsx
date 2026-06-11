@@ -79,7 +79,7 @@ function FlowEditor({ workflow }: { workflow: Workflow }) {
 
 
   return (
-    <main className="h-full w-full">
+    <main className="h-full min-h-0 min-w-0 w-full overflow-hidden">
       <ReactFlow
         nodes={nodes}
         edges={edges}
