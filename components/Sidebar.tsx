@@ -1,5 +1,5 @@
 "use client";
-import { Show, UserButton } from "@clerk/nextjs";
+
 import {
   CoinsIcon,
   HomeIcon,
@@ -19,6 +19,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
+import UserAvailableCreditsBadge from "./UserAvailableCreditsBadge";
 
 function Sidebar() {
   const pathname = usePathname();
@@ -51,7 +52,9 @@ function Sidebar() {
       <div className="flex items-center justify-center gap-2 border-b border-separate p-4">
         <Logo />
       </div>
-      <div className="p-3 text-sm">TODO CREDITS</div>
+      <div className="p-3 text-sm">
+        <UserAvailableCreditsBadge />
+      </div>
       <div className="flex flex-col gap-4 p-4">
         {routes.map((route) => {
           const Icon = route.icon;
@@ -113,6 +116,7 @@ export function MobileSidebar() {
         <SheetTitle className="sr-only">Navigation menu</SheetTitle>
         <div className="flex items-center justify-between border-b border-separate p-4">
           <Logo fontSize="xl" iconSize={24} />
+          <UserAvailableCreditsBadge />
         </div>
         <div className="flex flex-col gap-4 p-4 flex-1">
           {routes.map((route) => {
