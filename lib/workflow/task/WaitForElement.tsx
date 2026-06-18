@@ -17,13 +17,11 @@ export const WaitForElementTask: WorkflowTask = {
     {
       name: "Selector",
       type: TaskParamType.STRING,
-      helperText: "CSS selector to wait for.",
       required: true,
     },
     {
       name: "Timeout (ms)",
       type: TaskParamType.STRING,
-      helperText: "Optional timeout in milliseconds before failing.",
     },
   ],
   outputs: [

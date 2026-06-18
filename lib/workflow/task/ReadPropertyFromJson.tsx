@@ -17,7 +17,6 @@ export const ReadPropertyFromJsonTask: WorkflowTask = {
     {
       name: "Property name",
       type: TaskParamType.STRING,
-      helperText: "Property key to read from the JSON payload.",
       required: true,
     },
   ],

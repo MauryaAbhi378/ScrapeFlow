@@ -17,7 +17,6 @@ export const NavigateUrlTask: WorkflowTask = {
     {
       name: "Url",
       type: TaskParamType.STRING,
-      helperText: "Destination URL to open in the current browser tab.",
       required: true,
     },
   ],

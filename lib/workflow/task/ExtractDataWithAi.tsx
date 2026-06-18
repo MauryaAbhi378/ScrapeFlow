@@ -10,14 +10,18 @@ export const ExtractDataWithAiTask: WorkflowTask = {
   isEntryPoint: false,
   inputs: [
     {
-      name: "Html",
+      name: "Content",
       type: TaskParamType.STRING,
       required: true,
     },
     {
-      name: "Instructions",
+      name: "Credentials",
+      type: TaskParamType.CREDENTIAL,
+      required: true,
+    },
+    {
+      name: "Prompt",
       type: TaskParamType.STRING,
-      helperText: "Describe the fields and output shape the AI should extract.",
       required: true,
     },
   ],

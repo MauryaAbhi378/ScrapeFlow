@@ -13,7 +13,7 @@ import { Edge } from "@xyflow/react";
 import { LogCollector } from "@/types/log";
 import { createLogCollector } from "../log";
 
-export async function ExecuteWorkflow(executionId: string) {
+export async function ExecuteWorkflow(executionId: string, nextRunAt?: Date) {
   const execution = await prisma.workFlowExecution.findFirst({
     where: {
       id: executionId,
@@ -30,21 +30,24 @@ export async function ExecuteWorkflow(executionId: string) {
   const environment: Environment = { phases: {} };
   const edges = JSON.parse(execution.definition).edges as Edge[];
 
-  await initializeWorkflowExecution(executionId, execution.workflowId);
+  await initializeWorkflowExecution(
+    executionId,
+    execution.workflowId,
+    nextRunAt,
+  );
   await initializePhaseStatuses(execution);
 
   let creditsConsumed = 0;
   let executionFailed = false;
   for (const phase of execution.phases) {
-    
     const phaseExecution = await executeWorkflowPhase(
       phase,
       environment,
       edges,
-      execution.userId
+      execution.userId,
     );
 
-    creditsConsumed +=phaseExecution.creditsCost
+    creditsConsumed += phaseExecution.creditsCost;
 
     if (!phaseExecution.success) {
       {
@@ -69,6 +72,7 @@ export async function ExecuteWorkflow(executionId: string) {
 async function initializeWorkflowExecution(
   executionId: string,
   workflowId: string,
+  nextRunAt?: Date,
 ) {
   await prisma.workFlowExecution.update({
     where: {
@@ -88,6 +92,7 @@ async function initializeWorkflowExecution(
       lastRunAt: new Date(),
       lastRunId: executionId,
       lastRunStatus: WorkflowExecutionStatus.RUNNING,
+      ...(nextRunAt && { nextRunAt }),
     },
   });
 }
@@ -168,7 +173,7 @@ async function executeWorkflowPhase(
   const creditsRequired = TaskRegistry[node.data.type].credits;
 
   let success = await decrementCredits(userId, creditsRequired, logCollector);
-  const creditsCost = success ? creditsRequired : 0
+  const creditsCost = success ? creditsRequired : 0;
 
   if (success) {
     success = await executePhase(phase, node, environment, logCollector);
@@ -184,7 +189,7 @@ async function finalizePhase(
   success: boolean,
   outputs: any,
   logCollector: LogCollector,
-  creditsCost : number
+  creditsCost: number,
 ) {
   const finalStatus = success
     ? WorkflowExecutionStatus.COMPLETED
@@ -251,6 +256,12 @@ function setupEnvironmentForPhase(
 
     if (!connectedEdge) {
       console.error("Missing edge for input", input.name, "node id:", node.id);
+      continue;
+    }
+
+    if (!connectedEdge.sourceHandle) {
+      console.error("Missing source handle for input", input.name);
+      continue;
     }
 
     const outputValue =

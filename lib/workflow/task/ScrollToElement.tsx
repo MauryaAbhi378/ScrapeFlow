@@ -17,7 +17,6 @@ export const ScrollToElementTask: WorkflowTask = {
     {
       name: "Selector",
       type: TaskParamType.STRING,
-      helperText: "CSS selector for the element to bring into view.",
       required: true,
     },
   ],

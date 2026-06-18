@@ -17,13 +17,11 @@ export const FillInputTask: WorkflowTask = {
     {
       name: "Selector",
       type: TaskParamType.STRING,
-      helperText: "CSS selector for the input or textarea element.",
       required: true,
     },
     {
       name: "Value",
       type: TaskParamType.STRING,
-      helperText: "Text that should be typed into the selected field.",
       required: true,
     },
   ],

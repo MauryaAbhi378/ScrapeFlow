@@ -10,7 +10,11 @@ import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 function AppProviders({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
   return (
-    <ClerkProvider appearance={{ theme: shadcn }}>
+    <ClerkProvider
+      appearance={{ theme: shadcn }}
+      signInFallbackRedirectUrl="/home"
+      signUpFallbackRedirectUrl="/home"
+    >
       <QueryClientProvider client={queryClient}>
         <ThemeProvider
           attribute="class"

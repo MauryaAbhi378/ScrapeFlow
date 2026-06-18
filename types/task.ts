@@ -20,6 +20,7 @@ export enum TaskParamType {
   STRING = "STRING",
   BROWSER_INSTANCE = "BROWSER_INSTANCE",
   JSON = "JSON",
+  CREDENTIAL = "CREDENTIAL",
 }
 
 export interface TaskParam {

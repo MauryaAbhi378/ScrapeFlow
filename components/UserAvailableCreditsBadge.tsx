@@ -11,8 +11,24 @@ import { buttonVariants } from "./ui/button";
 export default function UserAvailableCreditsBadge() {
   const query = useQuery({
     queryKey: ["user-available-credits"],
-    queryFn: () => GetAvailableCredits(),
-    refetchInterval: 30 * 1000,
+    queryFn: async () => {
+      console.log("[UserAvailableCreditsBadge] 📊 Fetching available credits...");
+      const credits = await GetAvailableCredits();
+      console.log("[UserAvailableCreditsBadge] ✅ Credits fetched:", credits);
+      return credits;
+    },
+    staleTime: 5 * 1000, // 5 seconds - marks data as stale after 5 seconds
+    refetchInterval: 10 * 1000, // Refetch every 10 seconds
+    refetchOnMount: true, // Always refetch on component mount
+    refetchOnWindowFocus: true, // Refetch when window regains focus
+  });
+
+  // Log query status for debugging
+  console.log("[UserAvailableCreditsBadge] 📋 Query status:", {
+    isLoading: query.isLoading,
+    isStale: query.isStale,
+    data: query.data,
+    error: query.error?.message,
   });
   return (
     <Link

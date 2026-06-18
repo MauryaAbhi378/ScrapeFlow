@@ -7,6 +7,7 @@ import { AppNode } from "@/types/appNode";
 import { useCallback } from "react";
 import BrowserInstanceParam from "./param/BrowserInstanceParam";
 import JsonParam from "./param/JsonParam";
+import CredentialParam from "./param/CredentialParam";
 
 function NodeParamField({
   param,
@@ -50,6 +51,14 @@ function NodeParamField({
     case TaskParamType.JSON:
       return (
         <JsonParam
+          param={param}
+          value={value}
+          updateNodeParamValue={updateNodeParamValue}
+        />
+      );
+    case TaskParamType.CREDENTIAL:
+      return (
+        <CredentialParam
           param={param}
           value={value}
           updateNodeParamValue={updateNodeParamValue}

@@ -17,7 +17,6 @@ export const DeliverViaWebhookTask: WorkflowTask = {
     {
       name: "Webhook URL",
       type: TaskParamType.STRING,
-      helperText: "Destination endpoint that should receive the payload.",
       required: true,
     },
   ],

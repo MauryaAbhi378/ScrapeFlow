@@ -17,7 +17,6 @@ export const ClickElementTask: WorkflowTask = {
     {
       name: "Selector",
       type: TaskParamType.STRING,
-      helperText: "CSS selector for the element to click.",
       required: true,
     },
   ],

@@ -17,13 +17,11 @@ export const AddPropertyToJsonTask: WorkflowTask = {
     {
       name: "Property name",
       type: TaskParamType.STRING,
-      helperText: "Property key to add or update on the JSON object.",
       required: true,
     },
     {
       name: "Value",
       type: TaskParamType.STRING,
-      helperText: "String value to store for the provided property key.",
       required: true,
     },
   ],

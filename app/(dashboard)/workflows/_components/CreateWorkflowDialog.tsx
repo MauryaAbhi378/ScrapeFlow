@@ -69,7 +69,7 @@ function CreateWorkflowDialog({ triggerText }: { triggerText?: string }) {
         setOpen(open);
     }}>
       <DialogTrigger asChild>
-        <Button>{triggerText ?? "Create Workflow"}</Button>
+        <Button className="bg-emerald-500 hover:bg-emerald-600">{triggerText ?? "Create Workflow"}</Button>
       </DialogTrigger>
       <DialogContent className="px-0">
         <CustomDialogHeader
