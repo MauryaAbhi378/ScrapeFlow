@@ -1,22 +1,18 @@
-import { PrismaClient } from "@prisma/client";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaClient } from '@prisma/client'
+import { PrismaNeon } from '@prisma/adapter-neon'
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
-
-function createPrismaClient() {
-  const databaseUrl = process.env.DATABASE_URL;
-
-  if (!databaseUrl) {
-    throw new Error("DATABASE_URL is not set.");
-  }
-
-  return new PrismaClient({
-    adapter: new PrismaBetterSqlite3({
-      url: databaseUrl,
-    }),
-  });
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined
 }
 
-export const prisma = globalForPrisma.prisma || createPrismaClient();
+const adapter = new PrismaNeon({
+  connectionString: process.env.DATABASE_URL!,  // pooled URL at runtime
+})
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({ adapter })
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma
+}
