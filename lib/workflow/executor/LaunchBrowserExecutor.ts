@@ -17,12 +17,16 @@ export async function LaunchBrowserExecutor(
       
       try {
         // For production (serverless environments)
-        const chromium = await import("@sparticuz/chromium");
+        // Using chromium-min which loads binaries from remote URL
+        const chromium = await import("@sparticuz/chromium-min");
         const puppeteerCore = await import("puppeteer-core");
         
-        // Get executable path with fallback
-        const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || 
-                               await chromium.default.executablePath();
+        // Use Chromium binaries from GitHub releases (no local files needed)
+        // This avoids file size limits and deployment bundle issues
+        const executablePath = await chromium.default.executablePath(
+          process.env.CHROMIUM_PACK_URL || 
+          'https://github.com/Sparticuz/chromium/releases/download/v140.0.0/chromium-v140.0.0-pack.tar'
+        );
         
         environment.log.info(`Using Chrome executable: ${executablePath}`);
         

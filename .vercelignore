@@ -1,0 +1,2 @@
+# Keep chromium binaries
+!node_modules/@sparticuz/chromium/bin/**
