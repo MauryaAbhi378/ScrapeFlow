@@ -1,13 +1,11 @@
 {
   "functions": {
     "app/api/**/*.ts": {
-      "maxDuration": 60,
-      "memory": 3008
+      "maxDuration": 10,
+      "memory": 1024
     }
   },
   "env": {
     "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD": "true"
-  },
-  "outputDirectory": ".next",
-  "buildCommand": "npm run build"
+  }
 }
