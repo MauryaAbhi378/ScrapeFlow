@@ -3,7 +3,7 @@ import Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-05-27.dahlia",
+  apiVersion: "2026-06-24.dahlia",
 });
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
