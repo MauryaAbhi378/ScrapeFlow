@@ -16,33 +16,18 @@ export async function LaunchBrowserExecutor(
       environment.log.info("Launching browser in production mode");
       
       try {
-        // For production (serverless environments)
-        // Using chromium-min which loads binaries from remote URL
-        const chromium = await import("@sparticuz/chromium-min");
-        const puppeteerCore = await import("puppeteer-core");
+        // For production (Vercel/serverless environments)
+        const chromeLauncher = await import("chrome-aws-lambda");
         
-        // Use Chromium binaries from GitHub releases (no local files needed)
-        // This avoids file size limits and deployment bundle issues
-        const executablePath = await chromium.default.executablePath(
-          process.env.CHROMIUM_PACK_URL || 
-          'https://github.com/Sparticuz/chromium/releases/download/v140.0.0/chromium-v140.0.0-pack.tar'
-        );
+        environment.log.info("Getting Chrome executable path...");
+        const executablePath = await chromeLauncher.default.executablePath;
         
         environment.log.info(`Using Chrome executable: ${executablePath}`);
         
-        browser = await puppeteerCore.default.launch({
-          args: [
-            ...chromium.default.args,
-            '--disable-gpu',
-            '--disable-dev-shm-usage',
-            '--disable-setuid-sandbox',
-            '--no-first-run',
-            '--no-sandbox',
-            '--no-zygote',
-            '--single-process',
-          ],
+        browser = await chromeLauncher.default.puppeteer.launch({
+          args: chromeLauncher.default.args,
           executablePath,
-          headless: true,
+          headless: chromeLauncher.default.headless,
         });
       } catch (prodError: any) {
         environment.log.error(`Production browser launch failed: ${prodError.message}`);
