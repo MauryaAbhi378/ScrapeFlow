@@ -7,8 +7,5 @@
   },
   "env": {
     "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD": "true"
-  },
-  "outputFileTracing": {
-    "maxBytes": 104857600
   }
 }
