@@ -17,17 +17,19 @@ export async function LaunchBrowserExecutor(
       
       try {
         // For production (Vercel/serverless environments)
-        const chromeLauncher = await import("chrome-aws-lambda");
+        const chromium = await import("@sparticuz/chromium");
+        const puppeteerCore = await import("puppeteer-core");
         
         environment.log.info("Getting Chrome executable path...");
-        const executablePath = await chromeLauncher.default.executablePath;
+        const executablePath = await chromium.default.executablePath();
         
         environment.log.info(`Using Chrome executable: ${executablePath}`);
         
-        browser = await chromeLauncher.default.puppeteer.launch({
-          args: chromeLauncher.default.args,
+        browser = await puppeteerCore.default.launch({
+          args: chromium.default.args,
+          defaultViewport: chromium.default.defaultViewport,
           executablePath,
-          headless: chromeLauncher.default.headless,
+          headless: chromium.default.headless,
         });
       } catch (prodError: any) {
         environment.log.error(`Production browser launch failed: ${prodError.message}`);
