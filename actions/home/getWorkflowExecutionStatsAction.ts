@@ -77,7 +77,7 @@ export async function getWorkflowExecutionStatsAction(): Promise<ExecutionStats>
   });
 
   // Populate with actual data
-  executions.forEach((execution) => {
+  executions.forEach((execution: { completedAt: Date | null; status: string }) => {
     if (!execution.completedAt) return;
 
     const dateKey = format(execution.completedAt, "MMM d");

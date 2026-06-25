@@ -87,7 +87,7 @@ async function UserCredentials() {
 
   return (
     <div className="flex flex-col gap-2">
-      {credentials.map((credential) => (
+      {credentials.map((credential: any) => (
         <CredentialCard key={credential.id} credential={credential} />
       ))}
     </div>

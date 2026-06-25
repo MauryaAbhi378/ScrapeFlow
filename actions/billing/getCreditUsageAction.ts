@@ -51,7 +51,7 @@ export async function getCreditUsageAction(): Promise<DailyUsage[]> {
   });
 
   // Populate with actual data
-  phases.forEach((phase) => {
+  phases.forEach((phase: { completedAt: Date | null; creditsCost: number | null; status: string }) => {
     if (!phase.completedAt || !phase.creditsCost) return;
 
     const dateKey = format(phase.completedAt, "MMM d");

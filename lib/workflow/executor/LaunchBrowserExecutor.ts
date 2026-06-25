@@ -27,9 +27,8 @@ export async function LaunchBrowserExecutor(
         
         browser = await puppeteerCore.default.launch({
           args: chromium.default.args,
-          defaultViewport: chromium.default.defaultViewport,
           executablePath,
-          headless: chromium.default.headless,
+          headless: true,
         });
       } catch (prodError: any) {
         environment.log.error(`Production browser launch failed: ${prodError.message}`);

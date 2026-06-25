@@ -108,7 +108,7 @@ export function FlowToExecutionPlan(
 }
 
 function getValidInputs(node: AppNode, edges: Edge[], planned: Set<string>) {
-  const invalidInputs = [];
+  const invalidInputs: string[] = [];
   const inputs = TaskRegistry[node.data.type].inputs;
   for (const input of inputs) {
     const inputaValue = node.data.inputs[input.name];
